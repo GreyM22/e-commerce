@@ -1,0 +1,43 @@
+<div class="py-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <span class="anchor" id="formLogin"></span>
+
+      <!-- form card login -->
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h3 class="mb-0">Add Book</h3>
+        </div>
+        <div class="card-body">
+          <form class="form">
+            <div class="form-group">
+              <label for="uname1">Title</label>
+              <input [(ngModel)]="registerBookData.title" name="title" type="text"   class="form-control rounded-0" required>
+            </div>
+            <div class="form-group">
+              <label>Author</label>
+              <input [(ngModel)]="registerBookData.author" name="author" type="text"  class="form-control rounded-0"  required>
+            </div>
+            <div class="form-group">
+              <label for="uname1">Description</label>
+              <input [(ngModel)]="registerBookData.description" name="description" type="text" height="20px"   class="form-control rounded-0" required>
+            </div>
+            <div class="form-group">
+              <label for="uname1">Category</label>
+              <input [(ngModel)]="registerBookData.category" name="category" type="text"   class="form-control rounded-0" required>
+            </div>
+            <div class="form-group">
+              <label for="uname1">Price</label>
+              <input [(ngModel)]="registerBookData.price" name="price" type="number"   class="form-control rounded-0" required>
+            </div>
+            <div class="form-group">
+              <label for="uname1">Hide Book?</label>
+              <input [(ngModel)]="registerBookData.hideBook" name="hideBook" type="radio" value="true"   class="form-control rounded-0" > Hide
+              <input [(ngModel)]="registerBookData.hideBook" name="hideBook" type="radio" value="false"   class="form-control rounded-0" > Dont Hide
+            </div>
+            <button (click)="registerBook()" type="button"  class="btn btn-primary float-right">Register</button>
+          </form>
+        </div>
+        <!--/card-block-->
+      </div>
+      <!-- /form card login -->

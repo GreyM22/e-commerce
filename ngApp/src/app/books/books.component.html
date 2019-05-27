@@ -1,0 +1,16 @@
+<div class="row mt-5" [@divsAnimation]='books.length'>
+  <div class="col-md-4 mb-3" *ngFor="let book of books">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">{{book.name}}</h5>
+        <a href="#" class="btn btn-primary" (click)="book.hide=false" *ngIf="book.hide" style="margin-right: 5px">Show Details</a>
+      
+        <p class="card-text" *ngIf="!book.hide">{{book.description}}</p>
+        <a href="#" class="btn btn-primary">Buy Book</a>
+      </div>
+      <div class="card-footer text-muted">
+        {{book.price  | currency:'$'}}
+      </div>
+    </div>
+  </div>
+</div>
