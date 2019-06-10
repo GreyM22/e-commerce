@@ -1,0 +1,26 @@
+<div class="pointerCursor">
+  <div class="card text-center" style="min-height: 300px">
+    <div class="card-body">
+      <img [src]="book.urlImg">
+      <h5 class="card-title">{{book.title}}</h5>
+      <p class="card-text">{{authors}}</p>
+      <p class="card-text">{{book.genres.toString()}}</p>
+        <!--        <a href="#" class="btn btn-primary" (click)="book.hide=false" *ngIf="book.hide">Show
+          Details</a>
+-->
+<button id="edit" mat-raised-button color="primary"  (click)="openDialog()"> Edit Book</button>
+
+<button id="delete" mat-raised-button color="warn" (click)="deleteBook(book)"> Delete Book</button>
+
+        <!--<p class="card-text" *ngIf="!book.hide">{{book.description}}</p>-->
+        <!--<a href="#" class="btn btn-primary">Buy Book</a>-->
+    </div>
+    <div class="card-footer text-muted">
+
+      {{book.price  | currency:'$'}}
+    </div>
+  </div>
+</div>
+
+
+

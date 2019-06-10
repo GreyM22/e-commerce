@@ -1,0 +1,45 @@
+form.normal-form{
+    margin: 10px;
+}
+
+.controles-container{
+    width: 100%;
+    padding: 5%;    
+}
+
+.controles-container > * {
+    width: 100%;
+
+    }
+
+    .controles-container > textarea {
+        height: 30px;
+        
+        }
+
+    .add-bottom-padding{
+        padding-bottom: 0px;
+    }
+    /* radio group */
+mat-radio-group mat-radio-button{
+    margin-left: 5px;
+}
+
+.button-row button{
+    margin: 5px;
+    
+}
+
+.button-row {
+    display: flex;
+    align-items: flex-start;
+    
+}
+
+form{
+    align-self: center;
+}
+
+mat-error {
+    margin: 3px;
+}

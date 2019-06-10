@@ -1,0 +1,17 @@
+.pointerCursor{
+    cursor: pointer;
+}
+
+.row.mt-5{
+    width: 100vw
+}
+
+.search-div{
+    margin-top: 20px
+}
+
+.search-form-field{
+    margin-left: 5%; 
+    margin-right: 5%; 
+    width: 90%
+}

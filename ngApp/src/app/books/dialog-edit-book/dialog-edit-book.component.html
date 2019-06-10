@@ -1,0 +1,95 @@
+<mat-dialog-content>
+  <form #rForm="ngForm" class="normal-form" (submit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="400px">
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <input [(ngModel)]="book.title" #title="ngModel" required minlength="5" name="title" matInput
+              placeholder="Title">
+            <mat-error *ngIf="title.invalid && (title.dirty||title.touched)">
+              Required and minimum 5 characters needed.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea required minlength="50" [(ngModel)]="book.description" matInput placeholder="Description"
+              name="description" #description></textarea>
+            <mat-error *ngIf="description.errors?.required">This field is mandatory.</mat-error>
+            <mat-error *ngIf="description.errors?.minlength">Minimum 50 charactors needed.</mat-error>
+
+          </mat-form-field>
+
+          <!--<mat-form-field>
+            <mat-label>Do you want to delete an author?</mat-label>
+            <input [(ngModel)]="indextAuthor" 
+            type="number"
+          matInput 
+          placeholder="Insert the number of the Author"
+          name="indextAuthor">
+        </mat-form-field>-->
+          <!-- <div class="button-row">
+
+          <button mat-icon-button color="warn" (click)="removeAuthor()"><mat-icon>delete_outline</mat-icon></button>
+</div>-->
+
+          <mat-form-field>
+            <input [(ngModel)]="book.price" required matInput min="0" placeholder="Price" name="price">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input required class="add-bottom-padding add-bottom-marging" [(ngModel)]="book.urlImg" name="urlImg"
+              matInput placeholder="URL Image">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+          <div class="add-bottom-padding">
+            <mat-label>Hide Book?</mat-label><br>
+            <mat-radio-group [(ngModel)]="book.hideBook" matInput name="hideBook">
+              <mat-radio-button value="true">Hide</mat-radio-button>
+              <mat-radio-button value="false" style="margin-left: 10px">Dont Hide</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field *ngFor="let author of book.authors; let i = index; trackBy: trackAuthorById ">
+            <input 
+            [(ngModel)]="book.authors[i].author" 
+            required 
+            minlength="5" 
+            matInput 
+            placeholder="Author{{i+1}}"
+            name="author.{{i+1}}" 
+            #author="ngModel"
+            >
+            <mat-error *ngIf="author.invalid && (author.dirty||author.touched)">Required and minimum 5 characters
+              needed.</mat-error>
+
+          </mat-form-field>
+          <mat-form-field *ngFor="let genre of book.genres; let i = index;">
+            <mat-select required [(ngModel)]="book.genres[i]" placeholder="Genre {{i + 1}} : {{book.genres[i]}}"
+              name="genre">
+              <mat-option [value]="null"> Select Genre </mat-option>
+              <mat-option *ngFor="let genreData of genresData" [value]="genreData.name">{{genreData.name}}</mat-option>
+            </mat-select>
+
+
+            <mat-error>Genre is required.</mat-error>
+          </mat-form-field>
+
+          <div class="button-row">
+            <button mat-raised-button color="primary" type="submit" [disabled]="rForm.invalid"
+              (click)="editBook()">Submit</button>
+            <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+            <button mat-raised-button color="warn" (click)="onClose()">Close</button>
+          </div>
+
+        </div>
+      </mat-grid-tile>
+      
+    </mat-grid-list>
+  </form>
+</mat-dialog-content>

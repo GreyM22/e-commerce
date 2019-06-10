@@ -1,0 +1,14 @@
+<div class="search-div" >
+  <mat-form-field class="search-form-field" floatLabel="never" >
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" name="searchKey" type="text">
+  </mat-form-field>
+</div>
+
+
+<div class="row mt-5" [@divsAnimation]='books.length' >
+  <div class="col-md-4 mb-3" *ngFor="let book of filteredBooks; let i = index; trackBy: trackBookId">
+
+    <app-display-book [book]="book"  ></app-display-book>
+
+  </div>
+</div>

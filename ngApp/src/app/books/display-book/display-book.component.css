@@ -1,0 +1,13 @@
+button, a {
+    margin : 5px;
+}
+
+img{
+    width: 70%;
+    max-height: 55%;
+}
+
+.card-body{
+    height: 630px;
+}
+
