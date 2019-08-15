@@ -12,49 +12,45 @@ import * as _ from 'lodash';
 export class BooksService {
 
   private _booksUrl = 'http://localhost:3000/api/books';
-  private _bookUrl = 'http://localhost:3000/api/books/:id';
+  private _bookUrl = 'http://localhost:3000/api/book';
   private _specialbooksUrl = 'http://localhost:3000/api/specialbooks';
   private _registerUrlBook = 'http://localhost:3000/api/manage'
 
-  
+  public genres = [
+    {id :1, name: "Classic"},
+    {id :2, name: "Crime and Detective"},
+    {id :3, name: "Drama"},
+    {id :4, name: "Horror"},
+    {id :5, name: "Romance"},
+    {id :6, name: "Non-Ficion"},
+    {id :7, name: "Ficion"}
+ ]
 
-  form = new FormGroup({
-    _id: new FormControl(null),
-    title: new FormControl('', [Validators.required,  Validators.minLength(3)]),
-    authors: new FormControl('', Validators.required),
-    //authors: new FormArray([]),
-    description: new FormControl('', [Validators.required, Validators.minLength(50)]),
-    genres:  new FormControl('', Validators.required),
-    //genres:new FormArray([]),
-    price: new FormControl('', Validators.required),
-    hide: new FormControl(true),
-    hideBook: new FormControl(false)
-    
-  }); 
+
+  
 
   constructor( private http : HttpClient,
               private  _router: ActivatedRoute,
               ) { }
 
 
-  initializeFormGroup() {
-    this.form.setValue({
-      _id: null,
-      title:'',
-      authors: [],
-      description: '',
-      genres: [],
-      price: 0,
-      hide: true,
-      hideBook: false
-    });
-  }
 
   
 
+
+  getGenres(){
+    return this.genres
+  }
+  
   getsBooks(): Observable<any> {
 
     return this.http.get<any>(this._booksUrl)
+  }
+
+
+  getBook(id:string): Observable<any> {
+
+    return this.http.get<any>(this._bookUrl+'?_id='+id)
   }
 
   
@@ -63,24 +59,23 @@ export class BooksService {
     return this.http.get<any>(this._specialbooksUrl)
   }
 
-  registerBook(book){
+  registerBook(book): Observable<any>{
 
     return this.http.post<any>(this._registerUrlBook, book)
   }
 
-  updateBook(book): Observable<void>{
+  updateBook(book): Observable<any>{
 
     return this.http.put<any>(this._booksUrl+'?_id='+book._id, book)
   }
 
-  populateForm(book){
-    this.form.setValue(_.omit(book,'__v'))
-  }
+  
 
-  delete(book){
+  delete(book): Observable<any>{
     return this.http.delete<any>(this._booksUrl+'?_id='+book._id, book)
 
   }
+
 
 
 }

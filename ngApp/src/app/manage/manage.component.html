@@ -1,223 +1,139 @@
-<div class="py-5">
-  <div class="row">
-    <div class="col-md-6 mx-auto">
-      <span class="anchor" id="formLogin"></span>
+<mat-dialog-content>
+  <form #bookForm="ngForm" class="normal-form">
+    <mat-grid-list cols="2" rowHeight="500px">
+      <mat-grid-tile>
+        <div class="controles-container">
 
-      <!-- form card login -->
-      <div class="card rounded-0">
-        <div class="card-header">
-          <h3 class="mb-0">Add Book</h3>
+          <mat-form-field>
+            <input type="text" [(ngModel)]="registerBookData.title" matInput placeholder="Title" #title="ngModel"
+              name="title" required minlength="5">
+            <mat-error *ngIf="title.invalid && (title.dirty||title.touched)">
+              Required and minimum 5 characters needed.</mat-error>
+          </mat-form-field>
+
+
+
+
+
+          <mat-form-field>
+            <textarea required minlength="50" [(ngModel)]="registerBookData.description" matInput
+              placeholder="Description" name="description" #description="ngModel" rows="3" required minlength="50"
+              [ngClass]="{
+  
+                              'is-invalid': description.invalid && ( description.dirty || description.touched ),
+                              'is-valid': description.valid && ( description.dirty || description.touched )
+              
+                            }"></textarea>
+            <mat-error *ngIf="description.invalid && (description.dirty&&description.touched)">Required and
+              minimum 50 characters.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [(ngModel)]="registerBookData.price" type="number" #price="ngModel" required matInput min="0.1"
+              placeholder="Price" name="price" [ngClass]="{
+  
+                                        'is-invalid': price.invalid && ( price.dirty || price.touched ),
+                                        'is-valid': price.valid && ( price.dirty || price.touched )
+                        
+                                      }">
+            <mat-error>Price is required.</mat-error>
+          </mat-form-field>
+          <div class="add-bottom-padding">
+            <mat-label>Hide Book?</mat-label><br>
+            <mat-radio-group type="radio">
+              <mat-radio-button (click)="setHide(true)" value="true">Hide
+              </mat-radio-button>
+              <mat-radio-button (click)="setHide(false)" value="false" style="margin-left: 10px">
+                Dont Hide</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <mat-form-field>
+            <input required class="add-bottom-padding add-bottom-marging" [(ngModel)]="registerBookData.urlImg"
+              name="urlImg" #urlImg="ngModel" type="text" matInput required minlength="5" placeholder="URL Image">
+            <mat-error>Url reference is required
+            </mat-error>
+          </mat-form-field>
+
+
         </div>
-        <div class="card-body">
-          <form novalidate class="form" #bookForm="ngForm">
-            <div class="form-group">
-              <label for="uname1">Title</label>
-              <input [(ngModel)]="registerBookData.title" #title="ngModel" name="title" type="text"   
-              class="form-control rounded-0" required [ngClass]="{
+      </mat-grid-tile>
 
-                'is-invalid': title.invalid && ( title.dirty || title.touched ),
-                'is-valid': title.valid && ( title.dirty || title.touched )
+      <mat-grid-tile>
+        <div class="controles-container">
 
-              }">
-              <div class="invalid-feedback" *ngIf="title.invalid && (title.dirty&&title.touched)">
-                   Title is required 
-                </div>
+          <mat-form-field>
+            <input [(ngModel)]="author" matInput placeholder="Author" #Author="ngModel" name="author" type="text"
+              minlength="5" [required]="registerBookData.authors.length<1">
+            <div class="invalid-feedback" *ngIf="Author.invalid && (Author.dirty||Author.touched)">
+              <mat-error></mat-error>
             </div>
-            <div class="form-group">
-              
-              <label>Author</label>
-              <input [(ngModel)]="author" 
-              #Author="ngModel" 
-              name="author"
-              type="text" 
-              minlength="5" 
-              class="form-control rounded-0" 
-              [required]="registerBookData.authors.length<1" 
-              [ngClass]="{
-
-                'is-invalid': (Author.invalid && Author.dirty) || ( (registerBookData.authors.length<1) && Author.touched  ),
-                'is-valid': Author.valid && ( Author.dirty || Author.touched )
-
-              }">
-              <div class="invalid-feedback" *ngIf="Author.invalid && (Author.dirty||Author.touched)">
-                  Author is required and loger than 5 characters
-               </div>
-               <div class="invalid-feedback" *ngIf="Author.valid && (registerBookData.authors.length<1) && Author.touched">
-                  Click the button "Add Author" to insert author
-               </div>
-             <button [disabled]="Author.invalid" (click)="addAuthor()" type="button" style="margin-top: 2px" 
-             class="btn btn-primary float-right">Add Author</button>
+            <div class="invalid-feedback" *ngIf="Author.valid && (registerBookData.authors.length<1) && Author.touched">
+              Click the button "Add Author" to insert author
             </div>
-        
-            <div class="panel panel-default">
-            
-              <ul class="list-group" style="margin-top: 50px">
-                
-                <li class="list-group-item" *ngFor="let author of registerBookData.authors; 
-                let i = index;">{{registerBookData.authors[i].author}}</li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <label for="uname1">Description</label>
-              
-              <textarea [(ngModel)]="registerBookData.description" #description="ngModel" name="description" 
-              class="form-control" id="exampleFormControlTextarea1" rows="3" required minlength="50"
-              [ngClass]="{
 
-                'is-invalid': description.invalid && ( description.dirty || description.touched ),
-                'is-valid': description.valid && ( description.dirty || description.touched )
 
-              }"
-              ></textarea>
-              <div class="invalid-feedback" *ngIf="description.invalid && (description.dirty&&description.touched)">
-                  Description is required and loger than 50 characters
-               </div>
-            </div>
-            <div class="form-group">
-              <label for="uname1">Genre</label>
-              <select 
-              class="form-control" 
-              name="genre" 
-              [(ngModel)]="genre" 
-              #Genre="ngModel"
-              [ngClass]="{
 
-                'is-invalid': (Genre.invalid && Genre.dirty) || ( (registerBookData.genres.length<1) && Genre.touched  ),
-                'is-valid': Genre.valid && ( Genre.dirty || Genre.touched )
 
-              }"
-            [required]="registerBookData.genres.length<1"
-              >
-<!--                  <option selected  [ngValue]="null">Select Genre</option>
--->>    
-                 <option *ngFor="let genre of genres" [value]="genre.name">
-                    {{genre.name}}
-                  </option>
-                </select>
-
-                <div class="invalid-feedback" *ngIf="Genre.invalid && (Genre.dirty||Genre.touched)">
-                    Genre is required 
-                 </div>
-                 <div class="invalid-feedback" *ngIf="Genre.valid && (registerBookData.genres.length<1) && Genre.touched">
-                    Click the button "Add Genre" to insert genre
-                 </div>
-  
-                <button [disabled]="Genre.invalid" (click)="addGenre()" type="button" style="margin-top: 2px" 
-                class="btn btn-primary float-right">Add Genre</button>
-            </div>
-            <div class="panel panel-default">
-            
-              <ul class="list-group" style="margin-top: 50px">
-                
-                <li class="list-group-item" *ngFor="let genre of registerBookData.genres;
-                 let i = index;">{{registerBookData.genres[i]}}</li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <label for="uname1">Price</label>
-              <input [(ngModel)]="registerBookData.price" name="price" type="number"   
-              class="form-control rounded-0" 
-              required
-              min="0"
-              #price="ngModel"
-              [ngClass]="{
-
-                'is-invalid': price.invalid && ( price.dirty || price.touched ),
-                'is-valid': price.valid && ( price.dirty || price.touched )
-
-              }">
-            </div>
-            <div class="form-group">
-                <label for="uname1">Hide Book?</label><br>
-                <div class="form-check">
-                    <input class="form-check-input" [(ngModel)]="registerBookData.hideBook"  name="hideBook" 
-                    type="radio" name="exampleRadios" id="exampleRadios2" value="true">
-                    <label class="form-check-label" for="exampleRadios2">
-                      Yes
-                    </label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" [(ngModel)]="registerBookData.hideBook"  name="hideBook"
-                       type="radio" name="exampleRadios" id="exampleRadios2" value="false">
-                      <label class="form-check-label" for="exampleRadios2">
-                        No
-                      </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                <label for="uname1">URL Image Reference</label>
-                <input [(ngModel)]="registerBookData.urlImg" 
-                #urlImg="ngModel" 
-                name="urlImg" 
-                type="text"   
-                class="form-control rounded-0" 
-                required 
-                placeholder="https://..."
-                [ngClass]="{
-  
-                  'is-invalid': urlImg.invalid && ( urlImg.dirty || urlImg.touched ),
-                  'is-valid': urlImg.valid && ( urlImg.dirty || urlImg.touched )
-  
-                }">
-                <div class="invalid-feedback" *ngIf="urlImg.invalid && (urlImg.dirty&&urlImg.touched)">
-                     Url reference is required 
-                  </div>
-              </div>
-  
-              
-            
-            <button (click)="registerBook()" type="button"  class="btn btn-primary float-right">Register</button>
-          </form>
-        </div>
-        <!--/card-block-->
-      </div>
-      <!-- /form card login -->
-
-      <!--<div class="search-div">
-        <button mat-raised-button  (click)="onCreate()">
-          <mat-icon>add</mat-icon>Create
-        </button>
-        <mat-form-field class="search-form-field" floatLabel="never">
-          <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
-          <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
-            <mat-icon>close</mat-icon>
+          </mat-form-field>
+          <button color="accent" mat-raised-button [disabled]="Author.invalid" (click)="addAuthor()" type="button"
+            style="margin-top: 2px" class="btn btn-primary float-right">
+            <mat-icon>person_add</mat-icon>
           </button>
-        </mat-form-field>
-      </div>
-      <div class="mat-elevation-z8">
-        <mat-table [dataSource]="books"  matSort>
-          <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef  mat-sort-header>Title</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="author">
-            <mat-header-cell *matHeaderCellDef  mat-sort-header>Author</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.author.toString()}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="genres">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Genre</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.genres.toString()}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="hideBook">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Is it hide?</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.hideBook}}</mat-cell>
-          </ng-container>
-         <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
-              <button mat-icon-button color="warn" (click)="onDelete(row.$key)"><mat-icon>delete_outline</mat-icon></button>
-            </mat-cell>
-          </ng-container>
+
+
+          <mat-list *ngFor="let author of registerBookData.authors;let i = index; ">
+            <mat-list-item class="mdc-list-item" role="option" aria-selected="true">
+              <mat-icon class="green-icon">person</mat-icon> {{registerBookData.authors[i].author}}
+            </mat-list-item>
+          </mat-list>
+          <mat-form-field>
+            <mat-select required [(ngModel)]="genre" placeholder="Book Genre" #Genre="ngModel" [ngClass]="{
           
-          
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
-      </div>-->
+                                    'is-invalid': (Genre.invalid && Genre.dirty) || ( (registerBookData.genres.length<1) && Genre.touched  ),
+                                    'is-valid': Genre.valid && ( Genre.dirty || Genre.touched )
+                    
+                                  }" [required]="registerBookData.genres.length<1" name="genre">
+              <mat-option [value]="null"> Select Genre </mat-option>
+              <mat-option *ngFor="let genre of genresData" [value]="genre.name">{{genre.name}}</mat-option>
+            </mat-select>
+
+            <div class="invalid-feedback" *ngIf="Genre.invalid && (Genre.dirty||Genre.touched)">
+              Genre is required
+            </div>
+            <div class="invalid-feedback" *ngIf="Genre.valid && (registerBookData.genres.length<1) && Genre.touched">
+              Click the button "Add Genre" to insert genre
+            </div>
+
+          </mat-form-field>
+          <button mat-raised-button [disabled]="Genre.invalid" (click)="addGenre()" color="accent" type="button"
+            style="margin-top: 2px" class="btn btn-primary float-right">
+            <mat-icon>save_alt</mat-icon>
+          </button>
+
+
+          <mat-list *ngFor="let genre of registerBookData.genres;
+                  let i = index;">
+
+            <mat-list-item class="genre">
+              <mat-icon class="green-icon toggle">toggle_on</mat-icon>
+              {{registerBookData.genres[i]}}
+            </mat-list-item>
+          </mat-list>
+
+
+          <div class="button-row">
+            <button mat-raised-button color="primary" type="submit"
+              [disabled]="bookForm.invalid||(registerBookData.authors.length===0)||(registerBookData.genres.length===0)"
+              (click)="registerBook()">Submit</button>
+            <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+            <button mat-raised-button color="warn" (click)="onClose()">Close</button>
+          </div>
+
+
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</mat-dialog-content>

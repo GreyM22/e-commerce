@@ -1,0 +1,21 @@
+.data-talbe, .button-row, mat-divider {
+    width: 80%;
+    margin: 20px auto;
+  
+  }
+  
+  .button-row button {
+    width: 100%;
+    margin: 5px;
+  }
+  
+  .table-col{
+    width:20%;
+  }
+
+  h4 {
+    font-family: "Franklin Gothic Demi Cond";
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+  }

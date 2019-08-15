@@ -1,4 +1,5 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "@material/list/mdc-list";
 
 
 /* notification */
@@ -25,3 +26,4 @@ snack-bar-container.success {
 body{
   width: 100%
 }
+

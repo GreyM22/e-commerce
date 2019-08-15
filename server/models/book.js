@@ -11,7 +11,10 @@ const bookSchema = new Schema({
     price : Number,
     hide : Boolean,
     hideBook : Boolean,
-    urlImg: String
+    urlImg: String,
+    idCart: Number,
+    addCartDate: Date
+
 })
 
 module.exports = mongoose.model('book', bookSchema, 'books')

@@ -9,7 +9,8 @@ const userSchema = new Schema({
     birthDate : Date,
     books : { type : Array , "default" : [] },
     password : String,
-    role : String
+    role : String,
+    myBook: { type : Array , "default" : [] },
 })
 
 module.exports = mongoose.model('user', userSchema, 'users')

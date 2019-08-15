@@ -21,7 +21,7 @@ export class DisplayBookComponent implements OnInit {
   constructor(private _router: Router,
               private _route: ActivatedRoute,
               private dialog: MatDialog,
-              private bookService: BooksService) {
+              private _bookService: BooksService) {
 
                 
                }
@@ -49,7 +49,7 @@ export class DisplayBookComponent implements OnInit {
   }
 
   deleteBook(book){
-    this.bookService.delete(book)
+    this._bookService.delete(book)
                     .subscribe(
                       res => console.log(res),
                       err => console.log(err)

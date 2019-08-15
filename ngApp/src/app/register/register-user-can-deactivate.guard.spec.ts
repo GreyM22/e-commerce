@@ -1,6 +1,6 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
-import { RegisterUserCanDeactivateGuard } from './register-user-can-deactivate.guard';
+import { RegisterUserCanDeactivateGuard } from '../guards/register-user-can-deactivate.guard';
 
 describe('RegisterUserCanDeactivateGuard', () => {
   beforeEach(() => {

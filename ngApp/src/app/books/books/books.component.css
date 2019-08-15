@@ -11,7 +11,61 @@
 }
 
 .search-form-field{
+    margin-left: 20px; 
+    margin-right: 5%; 
+    width: 85%
+}
+.search-form-field-noAdmin{
     margin-left: 5%; 
     margin-right: 5%; 
     width: 90%
 }
+
+button, a {
+    margin : 5px;
+}
+
+img{
+    height: 55%;
+    width: 70%;
+}
+
+.card-body{
+    height: 630px;
+}
+
+.add-botton{
+    float: left;
+    display: inline;
+    margin-top: 17px;
+    margin-right: 0;
+    margin-left:25px;
+}
+
+.example-card {
+    max-width: 400px;
+    display: table-cell;
+    height: 494px;
+  }
+  
+.example-card img{
+margin-left:  12.47%;
+margin-right: 12.47%;
+display: inline-block;
+max-height: 274px;
+object-fit: contain;
+
+}
+
+.price{
+    font-family: "Franklin Gothic Demi Cond";
+    text-align: center;
+    font-size: 20px;
+}
+
+.items{
+    text-align: center;
+}
+
+
+

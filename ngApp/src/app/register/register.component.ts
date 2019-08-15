@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+// import { FormGroup, FormControl } from '@angular/forms';
+import { User } from '../models/user';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -10,8 +12,17 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  registerUserData = {};
+  //the object that will take the value of the form
+  registerUserData : User = {
+    name: '',
+    surname: '',
+    birthDate: new Date(),
+    email: '',
+    password: '',
+    confirmPassword:''
+  };
 
+  // we take the formGroup in html to check later if its valid
   @ViewChild('rForm', { static: true }) registerForm :any;
 
   constructor( private _auth : AuthService,
@@ -22,20 +33,19 @@ export class RegisterComponent implements OnInit {
   }
  
   registerUser(){
-    console.log(this.registerUserData);
 
+    //check if form is valid to send data
     if(this.registerForm.valid){
 
+
       this._auth.registerUser(this.registerUserData)
-      .subscribe(
-        res => {
-          console.log(res)
-          localStorage.setItem('token', res.token)
-          this._router.navigate(['/specialbooks'])
-          this.registerForm.reset()
-        },
-        err => console.log(err)
-      )
+          .pipe(first()).subscribe(
+            res => console.log(res),
+            err => console.log(err)
+          )
+      this._router.navigate(['/login'])
+      this.registerForm.reset()
+
     }
   }
 

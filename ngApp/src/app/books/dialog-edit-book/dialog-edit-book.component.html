@@ -1,5 +1,5 @@
 <mat-dialog-content>
-  <form #rForm="ngForm" class="normal-form" (submit)="onSubmit()">
+  <form #rForm="ngForm" class="normal-form">
     <mat-grid-list cols="2" rowHeight="400px">
       <mat-grid-tile>
         <div class="controles-container">
@@ -17,20 +17,6 @@
             <mat-error *ngIf="description.errors?.minlength">Minimum 50 charactors needed.</mat-error>
 
           </mat-form-field>
-
-          <!--<mat-form-field>
-            <mat-label>Do you want to delete an author?</mat-label>
-            <input [(ngModel)]="indextAuthor" 
-            type="number"
-          matInput 
-          placeholder="Insert the number of the Author"
-          name="indextAuthor">
-        </mat-form-field>-->
-          <!-- <div class="button-row">
-
-          <button mat-icon-button color="warn" (click)="removeAuthor()"><mat-icon>delete_outline</mat-icon></button>
-</div>-->
-
           <mat-form-field>
             <input [(ngModel)]="book.price" required matInput min="0" placeholder="Price" name="price">
             <mat-error>This field is mandatory.</mat-error>
@@ -76,15 +62,13 @@
               <mat-option *ngFor="let genreData of genresData" [value]="genreData.name">{{genreData.name}}</mat-option>
             </mat-select>
 
-
             <mat-error>Genre is required.</mat-error>
           </mat-form-field>
 
           <div class="button-row">
             <button mat-raised-button color="primary" type="submit" [disabled]="rForm.invalid"
               (click)="editBook()">Submit</button>
-            <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
-            <button mat-raised-button color="warn" (click)="onClose()">Close</button>
+            <button mat-raised-button color="warn" [disabled]="rForm.invalid" (click)="onClose()">Close</button>
           </div>
 
         </div>

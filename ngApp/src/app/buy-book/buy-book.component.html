@@ -1,0 +1,32 @@
+<h4><b>Total Price {{totalPrice |  currency:'$'}} </b></h4>
+<mat-divider></mat-divider>
+<table mat-table [dataSource]="booksToBuy" class="mat-elevation-z8 data-talbe">
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let book">{{book.title}}</mat-cell>
+
+  </ng-container>
+  <ng-container matColumnDef="author">
+    <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+    <mat-cell *matCellDef="let book">
+      <p *ngFor="let author of book.authors; let i = index">
+        {{book.authors[i].author}}</p>
+    </mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+    <mat-cell *matCellDef="let book">{{book.price |  currency:'$'}}</mat-cell>
+
+  </ng-container>
+
+</table>
+
+<div class="button-row">
+  <button mat-raised-button color="primary" (click)="buyBook()"> Buy Books</button>
+  <button mat-raised-button color="warn" routerLink="/cart" routerLinkActive="active">Turn Back</button>
+</div>

@@ -3,7 +3,8 @@ import { MatDialogRef } from '@angular/material';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { BooksService } from '../../service/books.service';
 import { NotificationService } from '../../service/notification.service';
-import { Router } from '@angular/router';
+import { Book } from 'src/app/models/book';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dialog-edit-book',
@@ -12,33 +13,34 @@ import { Router } from '@angular/router';
 })
 export class DialogEditBookComponent implements OnInit {
 
+  //the form of the templet to check if its valid
   @ViewChild('rForm', { static: true }) editBookForm: any;
 
-  genresData = [
-    { id: 1, name: "Classic" },
-    { id: 2, name: "Crime and Detective" },
-    { id: 3, name: "Drama" },
-    { id: 4, name: "Horror" },
-    { id: 5, name: "Romance" },
-  ]
 
-  public book = { authors: [] }
+  //the book that will be edited
+  public book: Book;
+  //the variable to store the data of the genres
+  public genresData: any
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditBookComponent>,
-    private booksService: BooksService,
-    private notificationService: NotificationService,
-    private _router: Router ,
+    private _booksService: BooksService,
+    private _notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) book: any
   ) {
-    this.book = book
+    
+    if(book!==null){this.book = book}
     
   }
 
   ngOnInit() {
+    
+    this.genresData = this._booksService.getGenres()
+
 
   }
 
+  //change the value of the author if it is change in the form 
   onChangeAuthor(event: any, index: number){
     this.book.authors[index] = event.target.value
   }
@@ -48,14 +50,15 @@ export class DialogEditBookComponent implements OnInit {
   editBook() {
 
     if (this.editBookForm.valid) {
-      this.booksService.updateBook(this.book)
-        .subscribe(
+
+        this._booksService.updateBook(this.book)
+        .pipe(first()).subscribe(
           res => console.log(res),
           err => console.log(err),
-        )
-      this.notificationService.success(":: Submited");
+         )
+      
+      this._notificationService.success(":: Submited");
       this.dialogRef.close();
-      this._router.navigate(['/books'])
     }
 
   }
@@ -64,12 +67,7 @@ export class DialogEditBookComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onClear() {
-    this.editBookForm.reset()
-    this.book = {authors: []}
-
-  }
-
+  //for the *ngFor to reload only the changed author
   trackAuthorById(index:number, author:any){
     return author.id
   }

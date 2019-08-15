@@ -24,6 +24,7 @@ import * as Material from "@angular/material";
     Material.MatSortModule,
     Material.MatDialogModule,
     Material.MatCardModule,
+    Material.MatListModule,
 
   ],
 
@@ -45,6 +46,7 @@ import * as Material from "@angular/material";
     Material.MatSortModule,
     Material.MatDialogModule,
     Material.MatCardModule,
+    Material.MatListModule,
   ],
 
 })

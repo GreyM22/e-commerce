@@ -5,13 +5,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 //import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from "./material/material.module";
-
+import { StoreModule, reduceState } from "@ngrx/store";
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { BooksComponent } from './books/books/books.component';
-import { SpecialbooksComponent } from './specialbooks/specialbooks.component';
 import { AuthService } from './service/auth.service';
 import { BooksService } from './service/books.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -22,23 +21,33 @@ import { AdminGuard } from './guards/admin.guard';
 import { ConfirmEqualValidatorDirective } from './shared/confirm-equal-validator.directive';
 import { DisplayBookComponent } from './books/display-book/display-book.component';
 import { CreateBookCanDeactivateGuard } from './manage/create-book-can-deactivate.guard';
-import { RegisterUserCanDeactivateGuard } from './register/register-user-can-deactivate.guard';
+import { RegisterUserCanDeactivateGuard } from './guards/register-user-can-deactivate.guard';
 import { BookDetailsComponent } from './books/book-details/book-details.component';
 import { DialogEditBookComponent } from './books/dialog-edit-book/dialog-edit-book.component';
 import { NotificationService } from './service/notification.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { reducer } from './states/card-states/cart-store';
+import { CartComponent } from './Cart/cart.component';
+import { reducerUser } from './states/user-state/user-store';
+import { BuyBookComponent } from './buy-book/buy-book.component';
+import { MybookComponent } from './mybook/mybook.component'
+import { CartService } from './service/cart.service';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CartComponent,
     RegisterComponent,
     LoginComponent,
     BooksComponent,
-    SpecialbooksComponent,
     ConfirmEqualValidatorDirective,
     ManageComponent,
     DisplayBookComponent,
     BookDetailsComponent,
-    DialogEditBookComponent
+    DialogEditBookComponent,
+    PageNotFoundComponent,
+    BuyBookComponent,
+    MybookComponent,
     ],
   imports: [
     BrowserModule,
@@ -46,17 +55,23 @@ import { NotificationService } from './service/notification.service';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-//  JwtModule.forRoot({}),
     MaterialModule, 
+    StoreModule.forRoot({
+      booksCart: reducer,
+      userData: reducerUser
+    }),
     AppRoutingModule
   ],
 providers: [ AuthService, BooksService, AuthGuard, AdminGuard,CreateBookCanDeactivateGuard, 
-      RegisterUserCanDeactivateGuard, NotificationService, {
+      RegisterUserCanDeactivateGuard, NotificationService, CartService, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
   }],
-  entryComponents: [DialogEditBookComponent, DisplayBookComponent ],
+  entryComponents: [DialogEditBookComponent, DisplayBookComponent, ManageComponent ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  
+}

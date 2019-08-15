@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../service/auth.service';
-import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialogRef } from '@angular/material';
 import { BooksService } from '../service/books.service';
 import { NotificationService } from '../service/notification.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-manage',
@@ -14,91 +12,78 @@ import { NotificationService } from '../service/notification.service';
 })
 export class ManageComponent implements OnInit {
 
-  //objekti i te dhenave te librit, inicializohet perbrenda author dhe genres meqense mund te marrin me shume se nje vlere
-  registerBookData = { hide : "true", authors: [], genres: []};
+  //the object to retreve data from the form
+  registerBookData = { authors: [], genres: [], hideBook: false }
 
-  displayedColumns: string[] = ['title', 'author', 'genres', 'price', 'hideBook'];
-  public author:String
-  books : MatTableDataSource<any>;
-  searchKey: string;
+  //variable for the single author
+  public author = ''
 
-  // percaktojme vlerat e tagut selec
-  genres= [
-    {id :1, name: "Classic"},
-    {id :2, name: "Crime and Detective"},
-    {id :3, name: "Drama"},
-    {id :4, name: "Horror"},
-    {id :5, name: "Romance"},
-    {id :6, name: "Non-Ficion"},
-    {id :7, name: "Ficion"}
- ]
+  public genresData: any
+  //variable for the single genre
+  public genre: string
 
-  public genre:String
+  // we take the form in order to reset it later
+  @ViewChild('bookForm', { static: true }) public createBookForm: NgForm;
 
-// marrim formen e komponentit per tu kontrolluar nga guard canDeactivate()
-  @ViewChild('bookForm',{ static: true }) public createBookForm: NgForm;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-  constructor( private _auth : AuthService,
-                  private _router : Router,
-                  private _booksService: BooksService,
-                  private dialog: MatDialog,
-                  private notificationService: NotificationService
-                  ) { }
+  constructor(
+    private _booksService: BooksService,
+    public dialogRef: MatDialogRef<ManageComponent>,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit() {
-    this._booksService.getsBooks()
+
+    this.genresData = this._booksService.getGenres()
+  }
+
+  //add one author to the array of authors in the book
+  addAuthor() {
+    if (this.author.length >= 5) {
+      this.registerBookData.authors.push({ id: this.registerBookData.authors.length, author: this.author })
+      this.author = ''
+    }
+  }
+
+  //add one genre to the array of genres in the book
+  addGenre() {
+    if (this.genre.length >= 0) {
+      this.registerBookData.genres.push(this.genre)
+      this.genre = ''
+    }
+  }
+
+  registerBook() {
+
+    this._booksService.registerBook(this.registerBookData)
+                      .pipe(first())
                       .subscribe(
                         res => {
-                          
-                          this.books = new MatTableDataSource(res)
-                        
-                          this.books.sort = this.sort;
-                          this.books.paginator = this.paginator;
-                          
-                        })
-  }
-
-  addAuthor(){
-    if(this.author.length>=5)
-    {
-      this.registerBookData.authors.push({id:this.registerBookData.authors.length, author: this.author})
-      this.author=''
-    }
-  }
-
-  addGenre(){
-    if(this.genre.length>=0)
-    {
-      this.registerBookData.genres.push(this.genre)
-      this.genre=''
-    }
-  }
-
-  registerBook(){
-  
-    console.log(this.registerBookData);
-    this._booksService.registerBook(this.registerBookData)
-      .subscribe(
-        res => {
-          console.log(res)
-        },
-        err => console.log(err)
-      )
-      this.createBookForm.reset()
-      this.registerBookData.authors = []
-      this.registerBookData.genres = []
+                          console.log(res)
+                        },
+                        err => console.log(err)
+                      )
+                      
     this.notificationService.success(":: Submited");
+    this.dialogRef.close(this.registerBookData)
+
   }
 
-  onSearchClear() {
-    this.searchKey = "";
-    this.applyFilter();
+
+  onClose() {
+    this.dialogRef.close();
   }
 
-  applyFilter() {
-    this.books.filter = this.searchKey.trim().toLowerCase();
+  onReset() {
+    this.createBookForm.reset()
+    this.registerBookData.authors = []
+    this.registerBookData.genres = []
   }
+
+  //set the value of the hidenBook properity
+  setHide(flag: boolean) {
+    this.registerBookData.hideBook = flag
+  }
+
+
 
 }
