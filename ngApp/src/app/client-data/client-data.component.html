@@ -1,0 +1,44 @@
+<h4><b>The Clients</b></h4>
+
+<mat-divider></mat-divider>
+
+<table mat-table [dataSource]="clients" class="mat-elevation-z8 data-talbe">
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+
+  <ng-container matColumnDef="name">
+
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let client">{{client.name}}</mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="surname">
+    <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *matCellDef="let client">{{client.surname}}</mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    <mat-cell *matCellDef="let client">{{client.email}}</mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="nr_purchase">
+    <mat-header-cell *matHeaderCellDef> Nr.Purchase </mat-header-cell>
+    <mat-cell *matCellDef="let client"> {{client.myBook.length}}</mat-cell>
+
+  </ng-container>
+
+  <!-- <ng-container matColumnDef="block">
+    <mat-header-cell *matHeaderCellDef> Block </mat-header-cell>
+    <mat-cell *matCellDef="let client">
+      <mat-icon  (click)='blockClient(client)' color="warn">block</mat-icon>
+
+    </mat-cell>
+
+  </ng-container> -->
+
+
+</table>

@@ -20,6 +20,7 @@ import * as BookCartActions from '../../states/card-states/bookCart.action';
 import { first } from 'rxjs/operators';
 import { NotificationService } from 'src/app/service/notification.service';
 import { CartService } from 'src/app/service/cart.service';
+import { Router } from '@angular/router';
 
 
 
@@ -81,6 +82,7 @@ export class BooksComponent implements OnInit {
     private _booksService: BooksService,
     private _bookService: BooksService,
     public _authService: AuthService,
+    private _router: Router,
     private store: Store<MyCart>,
     private notificationService: NotificationService,
     private _cart: CartService) {
@@ -165,6 +167,10 @@ export class BooksComponent implements OnInit {
     this.notificationService.success(':: Added to Cart')
 
 
+  }
+
+  viewBook(bookId:number){
+    this._router.navigate(['/books',bookId])
   }
 
 

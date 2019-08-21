@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ManageComponent } from './manage/manage.component';
-import { AdminGuard } from './guards/admin.guard';
+import { NoAdminGuard } from './guards/noAdmin.guard';
 import { CreateBookCanDeactivateGuard } from './manage/create-book-can-deactivate.guard';
 import { CanDeactivate } from '@angular/router';
 import { RegisterUserCanDeactivateGuard } from './guards/register-user-can-deactivate.guard';
@@ -15,6 +15,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { CartComponent } from './Cart/cart.component';
 import { BuyBookComponent } from './buy-book/buy-book.component';
 import { MybookComponent } from './mybook/mybook.component';
+import { ClientDataComponent } from './client-data/client-data.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -33,7 +35,7 @@ const routes: Routes = [
   {
     path : 'mybooks',
     component : MybookComponent,
-    canActivate : [AuthGuard, AdminGuard]
+    canActivate : [AuthGuard, NoAdminGuard]
   },
   {
     path : 'login',
@@ -47,12 +49,19 @@ const routes: Routes = [
   {
     path: 'cart',
     component : CartComponent,
-    canActivate : [AuthGuard, AdminGuard]
+    canActivate : [AuthGuard, NoAdminGuard]
 
   },
   {
     path: 'buy',
     component : BuyBookComponent,
+    canActivate : [AuthGuard, NoAdminGuard]
+
+  },
+
+  {
+    path: 'clients',
+    component : ClientDataComponent,
     canActivate : [AuthGuard, AdminGuard]
 
   },

@@ -1,8 +1,8 @@
-
-
 <div class="search-div">
-    <button class="add-botton" mat-raised-button color="primary" 
-    (click)="createBook()" *ngIf="_authService.isAuthorized(['admin'])" ><mat-icon>add</mat-icon></button>    
+  <button class="add-botton" mat-raised-button color="primary" (click)="createBook()"
+    *ngIf="_authService.isAuthorized(['admin'])">
+    <mat-icon>add</mat-icon>
+  </button>
   <mat-form-field floatLabel="never" [ngClass]="{
     'search-form-field' : _authService.isAuthorized(['admin']),
     'search-form-field-noAdmin': ! _authService.isAuthorized(['admin'])
@@ -14,28 +14,33 @@
 
 
 
-<div class="row mt-5 " [@divsAnimation]='books.length' >
+<div class="row mt-5 " [@divsAnimation]='books.length'>
 
   <div class="col-md-4 mb-3" *ngFor="let book of filteredBooks; let i = index; trackBy: trackBookId">
 
-<mat-card class="example-card" >
-  <mat-card-header>
-    <mat-card-title>{{book.title}}</mat-card-title>
-    <mat-card-subtitle>{{book.genres.toString()}}</mat-card-subtitle>
+    <mat-card class="example-card" >
+      <mat-card-header>
+        <mat-card-title>{{book.title}}</mat-card-title>
+        <mat-card-subtitle>{{book.genres.toString()}}</mat-card-subtitle>
 
-  </mat-card-header>
-  <img mat-card-image [src]="book.urlImg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p class="price">
-      <b>Price {{book.price  | currency:'$'}}   </b> </p>
-  </mat-card-content>
-  <mat-card-actions class="items">
-    <button id="edit" mat-raised-button color="primary" *ngIf="_authService.isAuthorized(['admin'])" (click)="openDialog(book)"> Edit Book</button>
+      </mat-card-header>
+      <img mat-card-image [src]="book.urlImg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p class="price">
+          <b>Price {{book.price  | currency:'$'}} </b> </p>
+      </mat-card-content>
+      <mat-card-actions class="items">
+        <button id="edit" mat-raised-button color="primary" *ngIf="_authService.isAuthorized(['admin'])"
+          (click)="openDialog(book)"> Edit Book</button>
 
-    <button id="delete" mat-raised-button color="warn" *ngIf="_authService.isAuthorized(['admin'])" (click)="deleteBook(i)"> Delete Book</button>
+        <button id="delete" mat-raised-button color="warn" *ngIf="_authService.isAuthorized(['admin'])"
+          (click)="deleteBook(i)"> Delete Book</button>
 
-    <button  id="addCart" mat-raised-button color="warn" *ngIf="!_authService.isAuthorized(['admin'])" (click)="addCart(book)"> Add to Cart</button>
-</mat-card-actions>
-</mat-card>
-</div>
+          <button id="addCart" mat-raised-button color="primary" *ngIf="!_authService.isAuthorized(['admin'])"
+          (click)="viewBook(book._id)"> View Book</button>
+        <button id="addCart" mat-raised-button color="warn" *ngIf="!_authService.isAuthorized(['admin'])"
+          (click)="addCart(book)"> Add to Cart</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

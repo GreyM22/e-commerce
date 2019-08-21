@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { UserData } from './states/user-state/user-store';
 import * as BookCartActions from '../app/states/card-states/bookCart.action'
 import { MyCart } from './states/card-states/cart-store';
+import { ClientDataComponent} from './client-data/client-data.component';
 
 @Component({
   selector: 'app-root',

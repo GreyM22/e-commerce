@@ -2,7 +2,7 @@
 
 <table mat-table [dataSource]="books" class="mat-elevation-z8 data-talbe">
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
   <ng-container matColumnDef="bookImg">
 
@@ -31,7 +31,7 @@
 
   <ng-container matColumnDef="remove">
     <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
-    <mat-cell *matCellDef="let book">
+    <mat-cell *matCellDef="let book; let i = index">
       <mat-icon (click)="removeFromCart(i, book)" color="warn">delete_outline</mat-icon>
 
     </mat-cell>

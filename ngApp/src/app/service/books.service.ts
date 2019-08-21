@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import * as _ from 'lodash';
 
  

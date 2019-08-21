@@ -299,4 +299,51 @@ router.get('/mybook', (req, res) => {
 
 })
 
+//backend for the Client Managmend
+
+router.get('/clients', (req, res) => {
+
+
+    User.find({role: null}, (error, clients) => {
+        if (error) {
+            console.log(error);
+        } else
+            if (!clients) {
+                res.status(401).send('Empty StoreBook')
+            } else {
+                res.json(clients)
+            }
+    })
+    //res.json(books)
+
+
+})
+
+router.put('/client', verifyToken, (req, res) => {
+
+    if (!req.query._id) {
+        return res.status(400).send('Missing URL parameter: _id')
+    }
+
+    let clientData = req.body
+    let client = new Book(clientData)
+
+    let query = {
+        $set: {
+            block: client.block
+                }
+    }
+
+
+    Book.findOneAndUpdate({ _id: req.query._id }, query, { new: true })
+        .then(updatedClient => {
+            res.json(updatedClient)
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+})
+
+
+
 module.exports = router

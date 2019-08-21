@@ -10,45 +10,61 @@ import { trigger,
           keyframes } from '@angular/animations';
 
 import { FormGroup, FormControl } from '@angular/forms';
+import { Book } from 'src/app/models/book';
+import { first } from 'rxjs/operators';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card'
+import { Store } from '@ngrx/store';
+import { MyCart } from 'src/app/states/card-states/cart-store';
+import * as BookCartActions from '../../states/card-states/bookCart.action';
+import { CartService } from 'src/app/service/cart.service';
+import { NotificationService } from 'src/app/service/notification.service';
+
+
 
 
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
-  styleUrls: ['./book-details.component.css'],
-  animations: [
-    trigger('divsAnimation', [
-      transition('* => *', [
-        query('.card',style({opacity: 0}), {optional:true}),
-        query('.card',
-          stagger('300ms', [
-            animate('1s ease-in', keyframes([
-              style({ opacity:0 ,transform: 'translateY(-75px)', offset: 0}),
-              style({ opacity:.5,transform: 'translateY(35px)', offset: 0.3}),
-              style({ opacity: 1 ,transform: 'translateY(0)', offset: 1})
-            ]))
-        ]))
-      ])
-    ])
-  ],
+  styleUrls: ['./book-details.component.css']
 }) 
 export class BookDetailsComponent implements OnInit {
 
-  book = {};
+  book:Book;
 
   constructor(private _router: ActivatedRoute,
-              private _booksService : BooksService) { }
+              private _booksService : BooksService,
+              private store: Store<MyCart>,
+              private _cart: CartService,
+              private notificationService: NotificationService
+
+              ) { }
 
   ngOnInit() {
-    
-    /*const idObject = this._router.snapshot.params['id']
-
-
-    this._booksService.getsBook(idObject)
+    const id = this._router.snapshot.params['id']
+    this._booksService.getBook(id).pipe(first())
                       .subscribe(
                         res => this.book = res,
-                        err => console.log(err) 
-                      )*/
+                        err => console.log(err)
+                      )
   }
+
+  addCart(book: Book) {
+    this.store.dispatch(new BookCartActions.AddBook(book))
+     this.store.select('booksCart').pipe(first()).subscribe(
+       res => {
+         this._cart.updateCart(res)
+           .pipe(first()).subscribe(
+             res => console.log(res),
+             err => console.log(err)
+           )
+       },
+ 
+       err => console.log(err)
+     )
+     this.notificationService.success(':: Added to Cart')
+      }
+ 
+    
 
 }

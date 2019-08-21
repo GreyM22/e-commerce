@@ -1,21 +1,33 @@
-<!--<div class="row mt-5" [@divsAnimation]='book.length'>
-  <div class="col-md-4 mb-3" >
-    <div class="card text-center" style="min-height: 300px">
-      <div class="card-body">
-        <h5 class="card-title">{{book[0].title}}</h5>
-        <p class="card-text">{{book[0].authors.toString()}}</p>
-        <p class="card-text">{{book[0].genres.toString()}}</p>
-        <a href="#" class="btn btn-primary" (click)="book.hide=false" *ngIf="book.hide" style="margin-right: 5px">Show
-          Details</a>
+<div class="center">
+    <mat-card>
+        <mat-grid-list cols="4" rowHeight="110px">
+            <mat-grid-tile  rowspan="4">
+                <div  class="item">
+                <img [src]="book.urlImg">
+                <p class="caption  "><b>Price {{book.price |  currency:'$'}}</b></p>
+            </div>
+            </mat-grid-tile>
+            <mat-card-header>
+                <mat-grid-tile colspan="3">
+                    <mat-card-title class="title">{{book.title}}</mat-card-title>
 
+                    <mat-card-subtitle>
+                        <p class="sub-margin" *ngFor="let author of book.authors; let i = index">
+                            {{book.authors[i].author}}</p>
+                    </mat-card-subtitle>
 
-        <p class="card-text" *ngIf="!book.hide">{{book[0].description}}</p>
-        <a href="#" class="btn btn-primary">Buy Book</a>
-      </div>
-      <div class="card-footer text-muted">
+                </mat-grid-tile>
+            </mat-card-header>
+            <mat-card-content class="mat-subheading-2">
+                <mat-grid-tile colspan="3" rowspan="4">
+                    <div class="content">
+                    <p class="description">{{book.description}}</p>
+                    <button class="addCart" mat-raised-button color="warn" 
+                    (click)="addCart(book)"> Add to Cart</button>
+          </div>
+                </mat-grid-tile>
+            </mat-card-content>
+        </mat-grid-list>
+    </mat-card>
 
-        {{book[0].price  | currency:'$'}}
-      </div>
-    </div>
-  </div>
-</div>-->
+</div>

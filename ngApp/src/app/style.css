@@ -23,7 +23,8 @@ snack-bar-container.success {
     display: none;
 }
 
-body{
-  width: 100%
+body {
+  width: 100%;
+  background-color: blue;
 }
 

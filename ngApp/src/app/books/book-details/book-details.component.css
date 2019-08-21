@@ -1,0 +1,61 @@
+.center{
+    widows: 96%;
+    margin: 2%;
+}
+
+.title{
+    position: absolute;
+    top: 50px; 
+}
+
+.sub-margin{
+    margin-top: 120px;
+}
+.description{
+    margin:10px;
+    margin-left:0px;
+    text-align: justify;
+  text-justify: inter-word;
+}
+
+/* img{
+    display: block;
+    height: 100%;
+    border-radius: 3%;
+} */
+
+/* .price-margin{
+    margin-bottom: 0px;
+    display: block;
+
+} */
+
+.item {
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+}
+
+img {
+    height: 360px;
+    display: block;
+
+    border-radius: 3%;
+}
+
+.caption {
+    display: block;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    font-family: "Franklin Gothic Demi Cond";
+    font-size: 20px;
+
+}
+
+.content{
+    position: absolute;
+}
+
+.addCart{
+    width: 100%;
+}

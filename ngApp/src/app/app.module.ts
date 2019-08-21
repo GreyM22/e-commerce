@@ -17,7 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManageComponent } from './manage/manage.component';
-import { AdminGuard } from './guards/admin.guard';
+import { NoAdminGuard } from './guards/noAdmin.guard';
 import { ConfirmEqualValidatorDirective } from './shared/confirm-equal-validator.directive';
 import { DisplayBookComponent } from './books/display-book/display-book.component';
 import { CreateBookCanDeactivateGuard } from './manage/create-book-can-deactivate.guard';
@@ -32,6 +32,9 @@ import { reducerUser } from './states/user-state/user-store';
 import { BuyBookComponent } from './buy-book/buy-book.component';
 import { MybookComponent } from './mybook/mybook.component'
 import { CartService } from './service/cart.service';
+import { ClientDataComponent } from './client-data/client-data.component';
+import { ClientServiceService } from './service/client-service.service';
+import { AdminGuard } from './guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import { CartService } from './service/cart.service';
     PageNotFoundComponent,
     BuyBookComponent,
     MybookComponent,
+    ClientDataComponent,
     ],
   imports: [
     BrowserModule,
@@ -62,8 +66,9 @@ import { CartService } from './service/cart.service';
     }),
     AppRoutingModule
   ],
-providers: [ AuthService, BooksService, AuthGuard, AdminGuard,CreateBookCanDeactivateGuard, 
-      RegisterUserCanDeactivateGuard, NotificationService, CartService, {
+providers: [ AuthService, BooksService, AuthGuard, NoAdminGuard,CreateBookCanDeactivateGuard, 
+      RegisterUserCanDeactivateGuard, NotificationService, CartService, ClientServiceService,NoAdminGuard,
+       AdminGuard,{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
